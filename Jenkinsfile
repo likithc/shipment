@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // 🚨 UPDATE THIS: Change 'your-dockerhub-username' to your actual Docker Hub username!
-        DOCKER_HUB_USER = 'your-dockerhub-username' 
+        DOCKER_HUB_USER = 'your-dockerhub-username' // 🚨 Make sure this is your real Docker Hub username!
         IMAGE_NAME      = 'shipment-service'
         REGISTRY_IMAGE  = "docker.io/${DOCKER_HUB_USER}/${IMAGE_NAME}"
     }
@@ -27,12 +26,7 @@ pipeline {
             }
         }
 
-        stage('Trivy Image Scan') {
-            steps {
-                // 🚀 FIXED: Added '--scanners vuln' to make the scan lightweight and prevent disk errors
-                sh "trivy image --scanners vuln --severity HIGH,CRITICAL --exit-code 0 ${REGISTRY_IMAGE}:${BUILD_NUMBER}"
-            }
-        }
+        // 🚀 WE REMOVED TRIVY IMAGE SCAN TO PREVENT DISK CRASHES
 
         stage('Docker Push') {
             steps {
