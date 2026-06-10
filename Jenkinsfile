@@ -1,31 +1,16 @@
 pipeline {
     agent any
 
-    // We removed the 'tools' block completely to fall back to your native system paths!
-
     environment {
-        DOCKER_HUB_USER = 'your-dockerhub-username' // Update to your actual Docker Hub username
+        DOCKER_HUB_USER = 'your-dockerhub-username' // 🚨 Replace with your actual Docker Hub username!
         IMAGE_NAME      = 'shipment-service'
         REGISTRY_IMAGE  = "docker.io/${DOCKER_HUB_USER}/${IMAGE_NAME}"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Build & Test') {
             steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                // This calls the native 'mvn' installed on your system
-                sh 'mvn clean package -DskipTests'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
+                sh 'mvn clean package'
             }
         }
 
@@ -45,11 +30,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh """
-                docker build \
-                -t ${REGISTRY_IMAGE}:${BUILD_NUMBER} \
-                -t ${REGISTRY_IMAGE}:latest .
-                """
+                sh "docker build -t ${REGISTRY_IMAGE}:${BUILD_NUMBER} -t ${REGISTRY_IMAGE}:latest ."
             }
         }
 
@@ -74,12 +55,6 @@ pipeline {
                 sh 'docker compose down'
                 sh 'docker compose up -d'
             }
-        }
-    }
-
-    post {
-        always {
-            cleanWs()
         }
     }
 }
