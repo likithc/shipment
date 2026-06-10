@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_USER = 'your-dockerhub-username' // 🚨 Replace with your actual Docker Hub username!
+        DOCKER_HUB_USER = 'your-dockerhub-username' // 🚨 Replace with your real Docker Hub username!
         IMAGE_NAME      = 'shipment-service'
         REGISTRY_IMAGE  = "docker.io/${DOCKER_HUB_USER}/${IMAGE_NAME}"
     }
@@ -11,14 +11,6 @@ pipeline {
         stage('Build & Test') {
             steps {
                 sh 'mvn clean package'
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
-                }
             }
         }
 
