@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # MySQL Database Container
+  shipment-db:
+    image: mysql:8.0
+    container_name: shipment-mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: shipment_db
+    ports:
+      - "3306:3306"
+    networks:
+      - shipment-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot Application Container
+  shipment-service:
+    build: .
+    container_name: shipment-app-container
+    ports:
+      - "8083:8083"
+    environment:
+      - DB_HOST=shipment-db
+      - DB_PORT=3306
+      - DB_NAME=shipment_db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+    networks:
+      - shipment-network
+    depends_on:
+      shipment-db:
+        condition: service_healthy
+
+networks:
+  shipment-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

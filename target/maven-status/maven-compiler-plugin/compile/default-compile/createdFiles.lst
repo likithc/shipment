@@ -1,0 +1,5 @@
+com/company/shipment/service/ShipmentService.class
+com/company/shipment/controller/ShipmentController.class
+com/company/shipment/model/Shipment.class
+com/company/shipment/ShipmentApplication.class
+com/company/shipment/repository/ShipmentRepository.class

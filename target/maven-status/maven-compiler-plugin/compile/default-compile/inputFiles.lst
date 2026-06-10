@@ -1,0 +1,5 @@
+/root/maven/shipment/src/main/java/com/company/shipment/ShipmentApplication.java
+/root/maven/shipment/src/main/java/com/company/shipment/service/ShipmentService.java
+/root/maven/shipment/src/main/java/com/company/shipment/repository/ShipmentRepository.java
+/root/maven/shipment/src/main/java/com/company/shipment/model/Shipment.java
+/root/maven/shipment/src/main/java/com/company/shipment/controller/ShipmentController.java
