@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_USER = 'your-dockerhub-username' // 🚨 Make sure this is your real Docker Hub username!
+        DOCKER_HUB_USER = 'likithc' // 🚨 Make sure this is your real Docker Hub username!
         IMAGE_NAME      = 'shipment-service'
         REGISTRY_IMAGE  = "docker.io/${DOCKER_HUB_USER}/${IMAGE_NAME}"
     }
